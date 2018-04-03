@@ -1,0 +1,14 @@
+{
+  "name": "yak",
+  "version": "0.0.1",
+  "author": "Alex Barrett",
+  "dependencies": {
+    "koa": "^1.2.4",
+    "koa-static": "^2.0.0",
+    "markdown-it": "^8.0.0",
+    "markdown-it-emoji": "^1.2.0",
+    "moniker": "^0.1.2",
+    "pug": "^2.0.0-beta6",
+    "socket.io": "^1.4.8"
+  }
+}
