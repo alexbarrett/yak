@@ -13,6 +13,6 @@ module.exports = function (str) {
   return str.replace(RE, function(emote) {
     var id = data.emotes[emote].image_id;
     var src = data.template.small.replace('{image_id}', id);
-    return util.format('<img src="%s">', src);
+    return util.format('<img src="%s" class="twitch-emote">', src);
   });
 };

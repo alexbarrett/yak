@@ -15,7 +15,11 @@ body, textarea {
   flex-grow: 1;
   min-height: 0;
   overflow: auto;
-  padding: 1em;
+  padding: 0.5em 1em;
+}
+
+.msg {
+  margin-bottom: 0.25em;
 }
 
 .msg > strong {
@@ -34,6 +38,7 @@ body, textarea {
   font-size: 1rem;
   height: 1.5em;
   outline: none;
+  padding: 0.5em 1em;
   resize: none;
 }
 
@@ -43,4 +48,8 @@ p {
 
 img {
   vertical-align: middle;
+}
+
+.twitch-emote {
+  margin-top: -0.25em;
 }
