@@ -20,6 +20,7 @@ function add(msg) {
 }
 
 socket.on('recv', function (msg) {
+  updatePrompt();
   yak.value = '';
   yak.readOnly = false;
   resize();
@@ -40,6 +41,19 @@ yak.addEventListener('keydown', function (e) {
 });
 
 yak.addEventListener('input', resize);
+
+var prompts = [
+  "Write a message",
+  "Say something eloquent",
+  "Spam a meme",
+  "Get it off your chest",
+  "Tell us about yourself"
+];
+function updatePrompt() {
+  var randomIndex = Math.floor(Math.random() * prompts.length);
+  yak.placeholder = prompts[randomIndex];
+}
+updatePrompt();
 
 function resize() {
   var style = getComputedStyle(yak);
