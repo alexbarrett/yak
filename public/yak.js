@@ -3,6 +3,8 @@ var socket = io();
 var babble = document.getElementById('babble');
 var yak = document.getElementById('yak');
 
+var pinned = true; // Autoscroll with new content.
+
 function send(text) {
   socket.emit('yak', text);
 }
@@ -17,6 +19,9 @@ function add(msg) {
   );
   msgEl.className = 'msg';
   babble.appendChild(msgEl);
+  if (pinned) {
+    babble.scrollTop = babble.scrollHeight - babble.clientHeight;
+  }
 }
 
 socket.on('recv', function (msg) {
@@ -54,6 +59,10 @@ function updatePrompt() {
   yak.placeholder = prompts[randomIndex];
 }
 updatePrompt();
+
+babble.addEventListener('scroll', function (e) {
+  pinned = (babble.scrollHeight - babble.clientHeight <= babble.scrollTop);
+});
 
 function resize() {
   var style = getComputedStyle(yak);
