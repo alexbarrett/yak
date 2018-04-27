@@ -6,6 +6,7 @@ var emotes = Object.keys(data.emotes).reduce(function (acc, emote) {
   acc.push(emote);
   return acc;
 }, []);
+emotes.reverse();
 
 var RE = new RegExp(emotes.join('|'), 'g');
 
