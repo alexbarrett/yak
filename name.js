@@ -17,9 +17,15 @@ function hashCode(str) {
   return hash;
 }
 
+function pick(items, n) {
+  var len = items.length;
+  n = (n%len + len) % len;
+  return items[n];
+}
+
 function name(fingerprint) {
   var n = hashCode(fingerprint);
-  return util.format('%s-%s', adj[n % adj.length], noun[n % noun.length]);
+  return util.format('%s-%s', pick(adj, n), pick(noun, n));
 }
 
 module.exports = name;
