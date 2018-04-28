@@ -15,7 +15,7 @@ body, textarea {
   flex-grow: 1;
   min-height: 0;
   overflow: auto;
-  padding: 0.5em 1em;
+  padding: 0.5em;
 }
 
 .msg {
@@ -38,7 +38,7 @@ body, textarea {
   font-size: 1rem;
   height: 1.5em;
   outline: none;
-  padding: 0.5em 1em;
+  padding: 0.5em;
   resize: none;
 }
 
