@@ -43,6 +43,7 @@ io.on('connection', function (socket) {
   });
 
   socket.on('yak', function (text) {
+    console.log('<%s> %s', handle, text);
     var markup = md.renderInline(text);
     var markup = kappa(markup);
     var msg = { handle, markup };
