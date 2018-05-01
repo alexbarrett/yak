@@ -6,6 +6,7 @@ var name = require('./name');
 var kappa = require('./kappa');
 
 var app = koa();
+app.proxy = true;
 
 // logger
 
@@ -33,7 +34,7 @@ var md = new require('markdown-it')({
 md.use(require('markdown-it-emoji'));
 
 io.on('connection', function (socket) {
-  var fingerprint = socket.request.connection.remoteAddress;
+  var fingerprint = socket.handshake.headers['x-forwarded-for'] || socket.request.connection.remoteAddress;
   var handle = name(fingerprint);
 
   console.log("'%s' connected", handle);
