@@ -36,8 +36,12 @@ md.use(require('markdown-it-emoji'));
 io.on('connection', function (socket) {
   var ip = socket.handshake.headers['x-forwarded-for'] || socket.request.connection.remoteAddress;
   var handle = name(ip);
-
   console.log("'%s' connected from %s", handle, ip);
+
+  socket.on('disconnect', function() {
+    console.log("'%s' disconnected", handle);
+  });
+
   socket.on('yak', function (text) {
     var markup = md.renderInline(text);
     var markup = kappa(markup);
