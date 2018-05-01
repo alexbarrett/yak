@@ -34,10 +34,10 @@ var md = new require('markdown-it')({
 md.use(require('markdown-it-emoji'));
 
 io.on('connection', function (socket) {
-  var fingerprint = socket.handshake.headers['x-forwarded-for'] || socket.request.connection.remoteAddress;
-  var handle = name(fingerprint);
+  var ip = socket.handshake.headers['x-forwarded-for'] || socket.request.connection.remoteAddress;
+  var handle = name(ip);
 
-  console.log("'%s' connected", handle);
+  console.log("'%s' connected from %s", handle, ip);
   socket.on('yak', function (text) {
     var markup = md.renderInline(text);
     var markup = kappa(markup);
