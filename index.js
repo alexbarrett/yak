@@ -1,6 +1,7 @@
 var koa = require('koa');
 var static = require('koa-static');
 var pug = require('pug');
+var util = require('util');
 
 var name = require('./name');
 var kappa = require('./kappa');
@@ -10,11 +11,27 @@ app.proxy = true;
 
 // logger
 
+function timestamp(date) {
+  date = date || new Date();
+  var pad = (str) => str > 9 ? str : '0'+str;
+  return util.format('[%s:%s:%s]',
+    pad(date.getHours()),
+    pad(date.getMinutes()),
+    pad(date.getSeconds())
+  );
+}
+
+
+function log() {
+  var str = util.format.apply(util, arguments);
+  console.log('%s %s', timestamp(), str);
+}
+
 app.use(function* (next) {
   var start = new Date;
   yield next;
   var ms = new Date - start;
-  console.log('%s %s - %s', this.method, this.url, ms);
+  log('%s %s - %s', this.method, this.url, ms);
 });
 
 // response
@@ -36,14 +53,14 @@ md.use(require('markdown-it-emoji'));
 io.on('connection', function (socket) {
   var ip = socket.handshake.headers['x-forwarded-for'] || socket.request.connection.remoteAddress;
   var handle = name(ip);
-  console.log("'%s' connected from %s", handle, ip);
+  log("'%s' connected from %s", handle, ip);
 
   socket.on('disconnect', function() {
-    console.log("'%s' disconnected", handle);
+    log("'%s' disconnected", handle);
   });
 
   socket.on('yak', function (text) {
-    console.log('<%s> %s', handle, text);
+    log('<%s> %s', handle, text);
     var markup = md.renderInline(text);
     var markup = kappa(markup);
     var msg = { handle, markup };
@@ -53,4 +70,4 @@ io.on('connection', function (socket) {
 });
 
 server.listen(4444);
-console.log('Listening on port 4444');
+log('Listening on port 4444');
