@@ -19,10 +19,20 @@ function add(msg) {
   );
   msgEl.className = 'msg';
   babble.appendChild(msgEl);
+  layout();
+}
+
+function layout() {
   if (pinned) {
-    babble.scrollTop = babble.scrollHeight - babble.clientHeight;
+    babble.scrollTop = babble.scrollHeight;
   }
 }
+
+window.addEventListener('resize', layout);
+
+babble.addEventListener('scroll', function (e) {
+  pinned = (babble.scrollHeight - babble.clientHeight <= babble.scrollTop + 8);
+});
 
 socket.on('recv', function (msg) {
   updatePrompt();
@@ -59,10 +69,6 @@ function updatePrompt() {
   yak.placeholder = prompts[randomIndex];
 }
 updatePrompt();
-
-babble.addEventListener('scroll', function (e) {
-  pinned = (babble.scrollHeight - babble.clientHeight <= babble.scrollTop);
-});
 
 function resize() {
   var style = getComputedStyle(yak);
