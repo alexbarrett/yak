@@ -3,6 +3,7 @@
   "version": "0.0.1",
   "author": "Alex Barrett",
   "dependencies": {
+    "escape-string-regexp": "^1.0.5",
     "koa": "^1.2.4",
     "koa-static": "^2.0.0",
     "markdown-it": "^8.0.0",

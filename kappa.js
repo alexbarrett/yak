@@ -1,19 +1,27 @@
 var util = require('util');
+var escapeRE = require('escape-string-regexp')
 
-var data = require('./global');
+var twitch = require('./global');
+var bttv = require('./bttv');
 
-var emotes = Object.keys(data.emotes).reduce(function (acc, emote) {
-  acc.push(emote);
-  return acc;
-}, []);
+var emotes = [];
+var src = {};
+
+for (var emote in twitch.emotes) {
+  emotes.push(emote);
+  src[emote] = twitch.template.small.replace('{{image_id}}', emote.image_id);
+}
+for (var emote of bttv.emotes) {
+  emotes.push(emote.code)
+  src[emote.code] = bttv.urlTemplate.replace('{{id}}', emote.id).replace('{{image}}', '1x');
+}
+
+emotes.sort();
 emotes.reverse();
-
-var RE = new RegExp(emotes.join('|'), 'g');
+var RE = new RegExp('\b' + emotes.map(escapeRE).join('|') + '\b', 'g');
 
 module.exports = function (str) {
   return str.replace(RE, function(emote) {
-    var id = data.emotes[emote].image_id;
-    var src = data.template.small.replace('{image_id}', id);
-    return util.format('<img src="%s" class="twitch-emote">', src);
+    return util.format('<img src="%s" title="%s" class="twitch-emote">', src[emote], emote);
   });
 };
