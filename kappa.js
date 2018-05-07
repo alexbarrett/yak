@@ -9,7 +9,7 @@ var src = {};
 
 for (var emote in twitch.emotes) {
   emotes.push(emote);
-  src[emote] = twitch.template.small.replace('{{image_id}}', emote.image_id);
+  src[emote] = twitch.template.small.replace('{image_id}', twitch.emotes[emote].image_id);
 }
 for (var emote of bttv.emotes) {
   emotes.push(emote.code)
