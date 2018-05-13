@@ -13,14 +13,13 @@ app.proxy = true;
 
 function timestamp(date) {
   date = date || new Date();
-  var pad = (str) => str > 9 ? str : '0'+str;
+  var pad = (str) => str > 9 ? str : '0' + str;
   return util.format('[%s:%s:%s]',
     pad(date.getHours()),
     pad(date.getMinutes()),
     pad(date.getSeconds())
   );
 }
-
 
 function log() {
   var str = util.format.apply(util, arguments);

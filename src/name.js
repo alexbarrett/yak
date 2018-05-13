@@ -11,7 +11,7 @@ function hashCode(str) {
     return hash;
   }
   for (i = 0; i < str.length; i++) {
-    hash = (hash<<5)-hash + str.charCodeAt(i);
+    hash = (hash << 5) - hash + str.charCodeAt(i);
     hash = hash & hash; // Convert to 32bit integer
   }
   return hash;
@@ -19,7 +19,7 @@ function hashCode(str) {
 
 function pick(items, n) {
   var len = items.length;
-  n = (n%len + len) % len;
+  n = (n % len + len) % len;
   return items[n];
 }
 
