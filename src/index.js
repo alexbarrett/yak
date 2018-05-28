@@ -37,6 +37,7 @@ app.use(function* (next) {
 // response
 
 app.use(static(path.resolve(__dirname, 'public')));
+app.use(static('node_modules'));
 
 app.use(function* () {
   this.body = pug.renderFile(path.resolve(__dirname, 'yak.pug'));
@@ -66,6 +67,12 @@ io.on('connection', function (socket) {
     var msg = { handle, markup };
     socket.emit('recv', msg);
     socket.broadcast.emit('babble', msg);
+  });
+
+  socket.on('typing', function (typingState) {
+    // log('<%s> %s', handle, text);
+    var msg = { handle, typingState };
+    socket.emit('typing', msg);
   });
 });
 

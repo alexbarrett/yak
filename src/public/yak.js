@@ -4,6 +4,7 @@ var babble = document.getElementById('babble');
 var yak = document.getElementById('yak');
 
 var pinned = true; // Autoscroll with new content.
+var typingState = 0; // 0 = not typing, 1 = actively typing, 2 = started but now stopped
 
 function send(text) {
   socket.emit('yak', text);
@@ -47,11 +48,46 @@ socket.on('babble', function (msg) {
 });
 
 yak.addEventListener('keydown', function (e) {
-  var mod = e.altKey || e.ctrlKey || e.shiftKey; 
+  var mod = e.altKey || e.ctrlKey || e.shiftKey;
   if (e.keyCode == 13 && !mod) {
     e.preventDefault();
     yak.readOnly = true;
     send(yak.value);
+  }
+});
+
+function setTypingState(value) {
+  if (typingState !== value) {
+    typingState = value;
+    socket.emit('typing', value);
+  }
+}
+
+var typingStateTimeout;
+yak.addEventListener('input', function (e) {
+  setTypingState(1); // Actively typing
+  clearTimeout(typingStateTimeout);
+
+  typingStateTimeout = setTimeout(function () {
+    setTypingState(2); // Started but now stopped
+
+    typingStateTimeout = setTimeout(function () {
+      setTypingState(0); // Not typing
+    }, 30000);
+  }, 5000);
+});
+
+socket.on('typing', function(msg) {
+  switch (msg.typingState) {
+    case 0:
+      console.log('%s stopping typing', msg.handle);
+      break;
+    case 1:
+      console.log('%s is typing', msg.handle);
+      break;
+    case 2:
+      console.log('%s is thinking', msg.handle);
+      break;
   }
 });
 
