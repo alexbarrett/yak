@@ -2,6 +2,7 @@ var koa = require('koa');
 var static = require('koa-static');
 var pug = require('pug');
 var util = require('util');
+var path = require('path');
 
 var name = require('./name');
 var kappa = require('./kappa');
@@ -35,10 +36,10 @@ app.use(function* (next) {
 
 // response
 
-app.use(static('public'));
+app.use(static(path.resolve(__dirname, 'public')));
 
 app.use(function* () {
-  this.body = pug.renderFile('yak.pug');
+  this.body = pug.renderFile(path.resolve(__dirname, 'yak.pug'));
 });
 
 var server = require('http').createServer(app.callback());
@@ -68,5 +69,5 @@ io.on('connection', function (socket) {
   });
 });
 
-server.listen(4444);
-log('Listening on port 4444');
+server.listen(80);
+log('Listening on port 80');

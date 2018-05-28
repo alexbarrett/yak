@@ -1,0 +1,8 @@
+version: '2'
+services:
+  app:
+    image: node
+    ports: [80]
+    volumes:
+      - .:/app:z
+    command: node /app
