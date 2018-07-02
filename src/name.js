@@ -1,5 +1,5 @@
-var util = require('util');
-var moniker = require('moniker');
+var util = require("util");
+var moniker = require("moniker");
 
 var adj = moniker.adjective().words;
 var noun = moniker.noun().words;
@@ -19,13 +19,13 @@ function hashCode(str) {
 
 function pick(items, n) {
   var len = items.length;
-  n = (n % len + len) % len;
+  n = ((n % len) + len) % len;
   return items[n];
 }
 
 function name(fingerprint) {
   var n = hashCode(fingerprint);
-  return util.format('%s-%s', pick(adj, n), pick(noun, n));
+  return util.format("%s-%s", pick(adj, n), pick(noun, n));
 }
 
 module.exports = name;
