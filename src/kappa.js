@@ -1,8 +1,8 @@
 var util = require("util");
 var escapeRE = require("escape-string-regexp");
 
-var twitch = require("./global");
-var bttv = require("./bttv");
+var twitch = require("./emotes/global");
+var bttv = require("./emotes/bttv");
 
 var emotes = [];
 var src = {};
